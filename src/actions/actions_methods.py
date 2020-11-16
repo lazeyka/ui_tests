@@ -16,6 +16,11 @@ class Actions:
         self.driver = driver
 
     @allure.step
+    def open(self, url):
+        self.driver.get(url)
+        return self
+
+    @allure.step
     def wait_element(self, path):
         """
         Ожидаем появления элементы на странице. Передаем путь к ожидаемому элементу.
@@ -27,6 +32,14 @@ class Actions:
                 path))
         assert profile_element.is_displayed()
         return profile_element
+
+    @allure.step
+    def at_page(self):
+        """
+        Проверяем по title, что мы находимся на неавторизованной странице.
+        :return:
+        """
+        assert "Главная неавторизованная" in self.driver.title
 
     @allure.step
     def click_by_element(self, path):

@@ -1,6 +1,5 @@
 import pytest
-from src.pages.unauthorised.unauthorised import Unauthorised
-from src.actions.actions_methods import Actions
+from src.cases.unauthorised.login import Unauthorised
 
 
 @pytest.mark.usefixtures("get_driver")
