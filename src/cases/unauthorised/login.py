@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from src.actions.actions_methods import Actions
-from src.variables.authorised.authorised import Authorised
 from src.variables.data import Data
 from src.variables.path_to_elements import Path
 
@@ -16,7 +15,6 @@ class Unauthorised:
     def __init__(self, driver):
         self.driver = driver
         self.actions = Actions(self.driver)
-        self.authorised = Authorised()
         self.data = Data()
         self.path = Path()
 
