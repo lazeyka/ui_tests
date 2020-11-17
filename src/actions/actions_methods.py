@@ -1,6 +1,4 @@
 import time
-
-import allure
 from selenium.common.exceptions import InvalidArgumentException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -15,25 +13,22 @@ class Actions:
     def __init__(self, driver):
         self.driver = driver
 
-    @allure.step
     def open(self, url):
         self.driver.get(url)
         return self
 
-    @allure.step
     def wait_element(self, path):
         """
         Ожидаем появления элементы на странице. Передаем путь к ожидаемому элементу.
         :param path:
         :return:
         """
-        profile_element = WebDriverWait(self.driver, 30).until(
+        profile_element = WebDriverWait(self.driver, 60).until(
             EC.presence_of_element_located(
                 path))
         assert profile_element.is_displayed()
         return profile_element
 
-    @allure.step
     def at_page(self):
         """
         Проверяем по title, что мы находимся на неавторизованной странице.
@@ -41,7 +36,6 @@ class Actions:
         """
         assert "Главная неавторизованная" in self.driver.title
 
-    @allure.step
     def click_by_element(self, path):
         """
         Кликаем по элементу. Передаем путь к ожидаемому элементу.
@@ -49,18 +43,17 @@ class Actions:
         :return:
         """
         y = 0
-        tr = 0  # сколько раз пробовали
+        count = 0  # сколько раз пробовали
         self.wait_element(path)
-        while y != 1 and tr < 60:
+        while y != 1 and count < 60:
             try:
                 self.wait_element(path).click()
                 y = 1  # как только поняли, что все ок
             except Exception:
                 time.sleep(1)
-                tr = tr + 1  # кол-во попыток
-                print("попытка номер ", tr)
+                count = count + 1  # кол-во попыток
+                print("попытка номер ", count)
 
-    @allure.step
     def enter_in_field(self, path, text):
         """
         Вводит текст в поле ввода. Передаем путь к элементу и текст для ввода.
@@ -75,7 +68,6 @@ class Actions:
         except InvalidArgumentException:
             print(InvalidArgumentException)
 
-    @allure.step
     def check_field_filled(self, path, text):
         """
         Проверяем, что в поле ввода ввели нужные символы. Передаем путь к элементу и ожидаемый текст.
@@ -83,7 +75,6 @@ class Actions:
         """
         return text in self.driver.title
 
-    @allure.step
     def compare_value_in_field(self, path, text):
         """
         Проверяем, что ввелся текст в поле ввода.

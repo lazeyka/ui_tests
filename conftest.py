@@ -3,11 +3,17 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.android.webdriver import WebDriver
 from webdriver_manager.firefox import GeckoDriverManager
+import os
 
 
 @pytest.fixture(scope="function")
 def get_driver(request):
-    driver: WebDriver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+    """
+    Инициылизация Веб драйвера. установка параметров. Отключение лога geckodriver.log
+    :param request:
+    :return:
+    """
+    driver: WebDriver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), service_log_path=os.devnull)
     driver.maximize_window()
     request.cls.driver = driver
     yield

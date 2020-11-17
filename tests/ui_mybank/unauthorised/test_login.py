@@ -1,10 +1,15 @@
 import pytest
-from src.cases.unauthorised.login import Unauthorised
+import allure
+from src.cases.unauthorised.login import Login
 
 
+@allure.story('Авторизация')
+@allure.severity(allure.severity_level.BLOCKER)
 @pytest.mark.usefixtures("get_driver")
-class TestLoadMainUnauthorisedPage:
+class TestAuthorisation:
 
-    def test_load_main_unauthorised_page(self):
-        self.unauthorised = Unauthorised(self.driver)
-        self.unauthorised.authorisation()
+    @allure.description('Авторизция с выключенным SMS-подтверждениеним')
+    @allure.severity(allure.severity_level.BLOCKER)
+    def test_login(self):
+        self.unauthorised = Login(self.driver)
+        self.unauthorised.login()

@@ -8,7 +8,7 @@ from src.variables.data import Data
 from src.variables.path_to_elements import Path
 
 
-class Unauthorised:
+class Login:
 
     driver = None
 
@@ -18,9 +18,8 @@ class Unauthorised:
         self.data = Data()
         self.path = Path()
 
-
     @allure.step
-    def authorisation(self):
+    def login(self):
         """
         Авторизация клиента в Итнернет Банке
         :return:
