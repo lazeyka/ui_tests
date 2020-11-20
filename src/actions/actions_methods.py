@@ -85,3 +85,12 @@ class Actions:
         text_element = self.wait_element(path).get_attribute('value')
         assert (text == text_element), ('Текст в поле ввода ->' + text_element + '<- не совпадает с введенным текстом '
                                                                                  '->' + text + '<-')
+
+    @allure.step("Проверяем элемент title на нужной странице странице")
+    def check_title(self, title: str):
+        """
+        Проверяем элемент title на странице
+        :param title: title страницы
+        :return:
+        """
+        assert title in self.driver.title

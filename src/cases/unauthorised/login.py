@@ -33,3 +33,8 @@ class Login:
         self.actions.compare_value_in_field(self.path.PASSWORD_INPUT, self.data.MAIN_USER['password'])
         self.actions.click_by_element(self.path.COME_IN_BUTTON)
         self.actions.wait_element(self.path.SHORT_NAME_BUTTON)
+        self.actions.click_by_element(self.path.SHORT_NAME_BUTTON)
+        self.actions.click_by_element(self.path.EXIT_BUTTON)
+        self.actions.check_title(self.path.TITLE_UNAUTHORISED)
+
+

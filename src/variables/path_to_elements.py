@@ -13,3 +13,4 @@ class Path:
 
     # Authorised
     SHORT_NAME_BUTTON = (By.XPATH, '//span[@class="user-short-name"]')
+    EXIT_BUTTON = (By.XPATH, '//div[@class="header-role exit"]/span[text()="Выйти"]')
