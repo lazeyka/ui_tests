@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 class Path:
 
     # Unauthorised
+    TITLE_UNAUTHORISED = 'Главная неавторизованная'
     ENTER_BUTTON = (By.XPATH, '//span[text()="Вход"]')
     NEXT_BUTTON = (By.XPATH, '//form[@class="login-form"]//button[contains(text(),"Далее")]')
     COME_IN_BUTTON = (By.XPATH, '//button[text()="Войти"]')

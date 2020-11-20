@@ -1,4 +1,5 @@
 import time
+import allure
 from selenium.common.exceptions import InvalidArgumentException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,14 +14,23 @@ class Actions:
     def __init__(self, driver):
         self.driver = driver
 
-    def open(self, url):
+    @allure.step("Открытие URL адреса")
+    def open(self, url: str, title: str):
+        """
+        Открытие URL адреса.
+        :param title: title страницы
+        :param url: Адрес открываемой страницы в браузере
+        :return:
+        """
         self.driver.get(url)
+        assert title in self.driver.title
         return self
 
-    def wait_element(self, path):
+    @allure.step("Ожидаем появления элементы на странице.")
+    def wait_element(self, path: str):
         """
         Ожидаем появления элементы на странице. Передаем путь к ожидаемому элементу.
-        :param path:
+        :param path: Путь к HTML Элементу на странице '(BY.SOMETHING, "путь")'
         :return:
         """
         profile_element = WebDriverWait(self.driver, 60).until(
@@ -29,57 +39,47 @@ class Actions:
         assert profile_element.is_displayed()
         return profile_element
 
-    def at_page(self):
-        """
-        Проверяем по title, что мы находимся на неавторизованной странице.
-        :return:
-        """
-        assert "Главная неавторизованная" in self.driver.title
-
-    def click_by_element(self, path):
+    @allure.step("Кликаем по элементу.")
+    def click_by_element(self, path: str):
         """
         Кликаем по элементу. Передаем путь к ожидаемому элементу.
-        :param path:
+        :param path: Путь к HTML Элементу на странице '(BY.SOMETHING, "путь")'
         :return:
         """
         y = 0
-        count = 0  # сколько раз пробовали
+        count = 0  # сколько раз пробовали кликнуть
         self.wait_element(path)
         while y != 1 and count < 60:
             try:
-                self.wait_element(path).click()
-                y = 1  # как только поняли, что все ок
+                WebDriverWait(self.driver, 60).until(
+                    EC.presence_of_element_located(
+                        path)).click()
+                y = 1  # как только поняли, что кликнули по элементу
             except Exception:
                 time.sleep(1)
                 count = count + 1  # кол-во попыток
-                print("попытка номер ", count)
+                print("Попытка номер ", count)
 
-    def enter_in_field(self, path, text):
+    @allure.step("Вводим текст в поле ввода.")
+    def enter_in_field(self, path: str, text):
         """
         Вводит текст в поле ввода. Передаем путь к элементу и текст для ввода.
-        :param path:
+        :param path: Путь к HTML Элементу на странице '(BY.SOMETHING, "путь")'
         :param text:
         :return:
         """
         self.wait_element(path).clear()
         try:
             self.wait_element(path).send_keys(text)
-            time.sleep(2)
         except InvalidArgumentException:
             print(InvalidArgumentException)
 
-    def check_field_filled(self, path, text):
+    @allure.step("Проверяем, что ввелся нужный текст в поле ввода.")
+    def compare_value_in_field(self, path: str, text):
         """
-        Проверяем, что в поле ввода ввели нужные символы. Передаем путь к элементу и ожидаемый текст.
-        :return:
-        """
-        return text in self.driver.title
-
-    def compare_value_in_field(self, path, text):
-        """
-        Проверяем, что ввелся текст в поле ввода.
-        :param path:
-        :param text:
+        Проверяем, что ввелся нужный текст в поле ввода.
+        :param path: Путь к HTML Элементу на странице '(BY.SOMETHING, "путь")'
+        :param text: Текст для вода в поле
         :return:
         """
         text_element = self.wait_element(path).get_attribute('value')

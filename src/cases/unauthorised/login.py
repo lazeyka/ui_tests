@@ -18,14 +18,13 @@ class Login:
         self.data = Data()
         self.path = Path()
 
-    @allure.step
+    @allure.step("Авторизция клиента с выключенным SMS-подтверждениеним")
     def login(self):
         """
-        Авторизация клиента в Итнернет Банке
+        Авторизция клиента с выключенным SMS-подтверждениеним
         :return:
         """
-        self.actions.open(self.data.URL_ADDRESS)
-        self.actions.at_page()
+        self.actions.open(self.data.URL_ADDRESS, self.path.TITLE_UNAUTHORISED)
         self.actions.click_by_element(self.path.ENTER_BUTTON)
         self.actions.enter_in_field(self.path.PHONE_INPUT, self.data.MAIN_USER['telephone'])
         self.actions.compare_value_in_field(self.path.PHONE_INPUT, self.data.MAIN_USER['telephone'])
