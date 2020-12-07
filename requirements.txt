@@ -1,7 +1,7 @@
 pytest==6.1.2
 selenium==3.141.0
-pytest-html==3.0.0
+pytest-html==3.1.0
 webdriver-manager==3.2.2
-allure-pytest>=2.8.20
+allure-pytest>=2.8.22
 pytest-rerunfailures>=9.1.1
 pytest-testconfig>=0.2.0
